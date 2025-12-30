@@ -101,17 +101,17 @@ public class Spotify {
         }
     }
 
-    public Paging<Track> getTopTracks(String accessToken) {
+    public Paging<Track> getTopTracks(String accessToken, String timeRange) {
         try {
-            return this.getPKCEApi(accessToken).getUsersTopTracks().limit(50).time_range("short_term").build().execute();
+            return this.getPKCEApi(accessToken).getUsersTopTracks().limit(50).time_range(timeRange).build().execute();
         } catch (IOException | ParseException | SpotifyWebApiException e) {
             return null;
         }
     }
 
-    public Paging<Artist> getTopArtists(String accessToken) {
+    public Paging<Artist> getTopArtists(String accessToken, String timeRange) {
         try {
-            return this.getPKCEApi(accessToken).getUsersTopArtists().limit(25).time_range("short_term").build().execute();
+            return this.getPKCEApi(accessToken).getUsersTopArtists().limit(25).time_range(timeRange).build().execute();
         } catch (IOException | ParseException | SpotifyWebApiException e) {
             return null;
         }

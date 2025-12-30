@@ -68,13 +68,27 @@ public class Server {
     }
 
     @GetMapping(value = "/get/top/tracks", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Paging<Track>> getTopTracks(@RequestHeader final String accessToken) {
-        return ResponseEntity.ok(spotify.getTopTracks(accessToken));
+    public ResponseEntity<Paging<Track>> getTopTracks(@RequestHeader final String accessToken,
+                                                      @RequestParam("time_range") final String timeRange) {
+        String term = switch (timeRange) {
+            case "medium_term" -> "medium_term";
+            case "long_term" -> "long_term";
+            default -> "short_term";
+        };
+
+        return ResponseEntity.ok(spotify.getTopTracks(accessToken, term));
     }
 
     @GetMapping(value = "/get/top/artists", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Paging<Artist>> getTopArtists(@RequestHeader final String accessToken) {
-        return ResponseEntity.ok(spotify.getTopArtists(accessToken));
+    public ResponseEntity<Paging<Artist>> getTopArtists(@RequestHeader final String accessToken,
+                                                        @RequestParam("time_range") final String timeRange) {
+        String term = switch (timeRange) {
+            case "medium_term" -> "medium_term";
+            case "long_term" -> "long_term";
+            default -> "short_term";
+        };
+
+        return ResponseEntity.ok(spotify.getTopArtists(accessToken, term));
     }
 
     @GetMapping(value = "/get/now/playing", produces = MediaType.APPLICATION_JSON_VALUE)
